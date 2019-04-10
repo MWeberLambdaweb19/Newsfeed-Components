@@ -2,22 +2,28 @@
 
 class ArticleClass {
   constructor(article) {
-    console.log(article)
     // assign this.domElement to the passed in domElement
     this.article = article;
     // create a reference to the ".expandButton" class. 
     this.expandButton = this.article.querySelector('.expandButton');
+    this.expandButton.innerText = "Click to Expand"
+    this.closeButton = this.article.querySelector('.closeButton');
     // Using your expandButton reference, update the text on your expandButton to say "expand"
-    this.expandButton.innerText = "Expand";
     this.expandArticle = this.expandArticle.bind(this);
     // Set a click handler on the expandButton reference, calling the expandArticle method.
-    this.expandButton.addEventListener("click", this.expandArticle)
+    this.expandButton.addEventListener("click", () => this.expandArticle())
+    this.closeButton.addEventListener("click", this.expandArticle)
   }
 
   expandArticle() {
     // Using our reference to the domElement, toggle a class to expand or hide the article.
+    this.expandButton.classList.toggle('hide-btn')
+    this.closeButton.classList.toggle('hide-btn')
+    this.closeButton.innerText = "Click to Close"
     this.article.classList.toggle('article-open')
-
+    console.log(this.article.classList)
+    console.log(this.expandButton.classList)
+    console.log(this.closeButton.classList)
   }
 }
 
@@ -33,3 +39,22 @@ let articles = document.querySelectorAll('.article');
 articles.forEach(function(articleContent){
   return new ArticleClass(articleContent)
 })
+
+class ArticleWriter {
+  constructor(articleStuff){
+  this.h1 = articleStuff.h1;
+  this.date = articleStuff.date;
+  this.content = articleStuff.content;
+  }
+}
+
+const ArticleNew = new ArticleWriter(
+  {
+  h1: [document.createElement('h1'), 'THIS ARTICLE TITLE'],
+  date: [document.createElement('p'), new Date],
+  content: [document.createElement('p'), "Content goes here ad nauseum"],
+  }
+)
+
+console.log(ArticleWriter)
+console.log(ArticleNew)
